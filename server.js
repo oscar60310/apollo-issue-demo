@@ -9,7 +9,6 @@ const typeDefs = gql`
   }
 
   type Nested {
-    id: ID!
     value1: Int!
     value2: Int!
   }
@@ -26,9 +25,8 @@ const resolvers = {
       id: "foobar",
       lastOnlineAt: new Date().toISOString(),
       nested: {
-        id: 1,
-        value1: 2,
-        value2: 3,
+        value1: 'value1',
+        value2: 'value2',
       },
     }),
   },
