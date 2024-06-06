@@ -9,8 +9,8 @@ const typeDefs = gql`
   }
 
   type Nested {
-    value1: Int!
-    value2: Int!
+    value1: String!
+    value2: String!
   }
 
   type Query {
