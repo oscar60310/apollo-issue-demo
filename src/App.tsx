@@ -9,7 +9,13 @@ import { useState } from "react";
 
 export const client = new ApolloClient({
   uri: "http://localhost:4001/graphql",
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Nested: {
+        // merge: true,
+      },
+    },
+  }),
 });
 
 export const QUERY_DATA_1 = gql`
@@ -37,27 +43,27 @@ export const QUERY_DATA_2 = gql`
 `;
 
 function Component1() {
-  const { loading, data } = useQuery(QUERY_DATA_1, {
+  const { data } = useQuery(QUERY_DATA_1, {
     fetchPolicy: "cache-and-network",
     nextFetchPolicy: "cache-first",
   });
 
   return (
     <div>
-      1: {loading ? "T" : "F"} {data?.foobar?.lastOnlineAt}
+      1: {data?.foobar.lastOnlineAt} {data?.foobar.nested.value1}
     </div>
   );
 }
 
 function Component2() {
-  const { loading, data } = useQuery(QUERY_DATA_2, {
+  const { data } = useQuery(QUERY_DATA_2, {
     fetchPolicy: "cache-and-network",
     nextFetchPolicy: "cache-first",
   });
 
   return (
     <div>
-      2: {loading ? "T" : "F"} {data?.foobar?.lastOnlineAt}
+      2: {data?.foobar.lastOnlineAt} {data?.foobar.nested.value2}
     </div>
   );
 }
